@@ -2,17 +2,82 @@
   .app {
     width: 100%;
     height: 100%;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #E8ECEF;
   }
 
-  .title {
-    padding: 16px;
+  h1, h2, h3, h4, h5 {
+    margin: 0;
+  }
 
-    font-size: 24px;
-    background-color: lightgray;
+  a {
+    text-decoration: none;
   }
 
   .content {
-    background-color: gray;
+    max-width: 960px;
+    margin: auto 32px;
+  }
+
+  h3 {
+      font-size: 32px;
+      font-weight: 100;
+    }
+
+  .card {
+    width: 225px;
+    margin: 10px;
+    height: 300px;
+    padding: 20px 0;
+    border-sizing: border-box;
+
+    text-align: center;
+    background-color: white;
+    border-radius: 5px;
+
+
+  }
+
+  .card-info {
+    padding: 20px;
+  }
+
+  .card-header {
+    margin: 0 auto;
+  }
+
+  .card-name {
+    margin-bottom: 30px;
+  }
+
+  .card-price {
+    margin-bottom: 15px;
+  }
+
+  .card-survey {
+    margin-bottom: 20px;
+  }
+
+  .more-details-button {
+    width: 100%;
+
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    margin-bottom: 20px;
+
+    background-color: white;
+
+    span {
+      opacity: 0.5;
+    }
+  }
+
+  .choose-plan-button {
+    margin: 20px;
+
+
+    border-radius: 5px;
+    border: 1px solid;
   }
 
   md-button {
@@ -21,5 +86,57 @@
 
   md-card-content {
     padding: 16px;
+    padding-left: 8px;
+  }
+
+  md-card {
+    background-color: white;
+    border-radius: 5px;
+  }
+
+  md-input-container {
+    margin-bottom: 10px;
+  }
+
+  .shopping-cart {
+    margin: 10px;
+    border-sizing: border-box;
+
+    background-color: white;
+    border-radius: 5px;
+  }
+
+  .company-card {
+    width: 600px;
+    margin: 10px;
+    padding: 20px;
+    border-sizing: border-box;
+
+    background-color: white;
+    border-radius: 5px;
+  }
+
+  .company-card-content {
+    width: 400px;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  .full-width-button {
+    width: 100%;
+    border: 0;
+    border-radius: 0 0 5px 5px;
+    background-color: white;
+    border-top: 2px solid;
+  }
+
+  .nav-links {
+    list-style-type: none;
+
+    li {
+      display: inline-block;
+    }
   }
 }

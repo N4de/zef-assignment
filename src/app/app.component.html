@@ -1,36 +1,211 @@
-<div *ngIf="view === 'default'" class="app" fxLayout="column" fxLayoutAlign="center stretch">
-  <div class="title" fxLayout="row" fxLayoutAlign="center center">
-    {{title}}
-  </div>
-
+<div *ngIf="view === 'default'" class="app" fxLayout="column" fxLayoutAlign="center center stretch">
   <div class="content" fxLayout="column" fxLayoutAlign="center center" fxFlex>
-    Price: {{plan === 'monthly' ? 10 : 5}}
-    <br>
-    <br>
-
-    <button md-raised-button (click)="plan = 'annual'">Annual pricing</button>
-    <br>
-    <button md-raised-button (click)="view = 'company-info'">Company info</button>
+    <h1>A perfect plan, for everyone.</h1>
+    <p>For detailed feature breakdown, view our <a>pricing page</a> </p>
+    <md-button-toggle-group #group="mdButtonToggleGroup">
+      <md-button-toggle value="annual" (click)="plan = 'annual'">Annual</md-button-toggle>
+      <md-button-toggle value="monthly" (click)="plan = 'monthly'">Monthly</md-button-toggle>
+    </md-button-toggle-group>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <div fxLayout.xs="column">
+        <div class="card">
+          <h4 class="card-name">Free</h4>
+          <h3 class="card-price">$0</h3>
+          <h5 class="card-survey">1 survey</h5>
+          <button class="more-details-button" md-button><span>MORE DETAILS</span></button>
+          <button class="choose-plan-button" disabled="true" md-button>Current plan</button>
+        </div>
+        <div *ngIf="plan === 'monthly'" class="card">
+          <h4 class="card-name">{{basic.name}}</h4>
+          <h3 class="card-price">${{basic.monthly}}</h3>
+          <h5 class="card-survey">{{basic.amount}} surveys</h5>
+          <button class="more-details-button" md-button><span>MORE DETAILS</span></button>
+          <button class="choose-plan-button" (click)="onSelect(basic)" (click)="view = 'company-info'" md-button>Choose plan</button>
+        </div>
+        <div *ngIf="plan === 'annual'" class="card">
+          <h4 class="card-name">{{basic.name}}</h4>
+          <h3 class="card-price">${{basic.annual}}</h3>
+          <p>${{basic.saving}} Savings</p>
+          <h5 class="card-survey">{{basic.amount}} surveys</h5>
+          <button class="more-details-button" md-button><span>MORE DETAILS</span></button>
+          <button class="choose-plan-button" (click)="onSelect(basic)" (click)="view = 'company-info'" md-button>Choose plan</button>
+        </div>
+      </div>
+      <div fxLayout.xs="column">
+        <div *ngIf="plan === 'monthly'" class="card">
+          <h4 class="card-name">{{pro.name}}</h4>
+          <h3 class="card-price">${{pro.monthly}}</h3>
+          <h5 class="card-survey">{{pro.amount}} surveys</h5>
+          <button class="more-details-button" md-button><span>MORE DETAILS</span></button>
+          <button class="choose-plan-button" (click)="onSelect(pro)" (click)="view = 'company-info'" md-button>Choose Plan</button>
+        </div>
+        <div *ngIf="plan === 'annual'" class="card">
+          <h4 class="card-name">{{pro.name}}</h4>
+          <h3 class="card-price">${{pro.annual}}</h3>
+          <p>${{pro.saving}} Savings</p>
+          <h5 class="card-survey">{{pro.amount}} surveys</h5>
+          <button class="more-details-button" md-button><span>MORE DETAILS</span></button>
+          <button class="choose-plan-button" (click)="onSelect(pro)" (click)="view = 'company-info'" md-button>Choose Plan</button>
+        </div>
+        <div class="card">
+          <h4 class="card-name">Enterprise</h4>
+          <h3 class="card-price">Custom</h3>
+          <h5 class="card-survey">Unlimited surveys</h5>
+          <button class="more-details-button" md-button><span>MORE DETAILS</span></button>
+          <button class="choose-plan-button" md-button>Contact us</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
 <div *ngIf="view === 'company-info'" class="app" fxLayout="column" fxLayoutAlign="center stretch">
-  <div class="title" fxLayout="row" fxLayoutAlign="center center">
-    {{company}} - Company info
-  </div>
-
-  <div class="content" fxLayout="column" fxLayoutAlign="center center" fxFlex>
-    <md-card>
-      <md-card-header>
-        <md-card-title>Information</md-card-title>
-        <md-card-subtitle>Account</md-card-subtitle>
-      </md-card-header>
-
-      <md-card-content>
-        <md-input-container>
-          <input md-input placeholder="Company name..." [(ngModel)]="company"/>
-        </md-input-container>
-      </md-card-content>
-    </md-card>
+  <div class="content" fxLayout="column" fxLayoutAlign="center center">
+     <div fxLayout="row">
+      <h4>Checkout</h4>
+      <ul class="nav-links">
+        <li>
+          <a href="">Choose Plan</a>
+        </li>
+        <li>
+          <a href="">Company info</a>
+        </li>
+        <li>
+          <a href="">Payment method</a>
+        </li>
+        <li>
+          <a href="">Pay</a>
+        </li>
+      </ul>
+    </div>
+    <div fxLayout.gt-sm="row" fxLayout="column-reverse" fxLayoutAlign="start">
+      <md-card *ngIf="plan === 'annual'" class="shopping-cart">
+        <md-card-header>
+          <md-card-title>Shopping cart</md-card-title>
+        </md-card-header>
+        <md-card-content>
+          <h3>{{selectedCard.name | uppercase}} plan</h3>
+          <h5 class="card-survey">{{selectedCard.amount}} Surveys</h5>
+          <b>${{selectedCard.annual}}</b>
+          <p>To be billed annually</p>
+          <p>After 10% annual billing discount. <br>Annual savings ${{selectedCard.saving}}.</p>
+        </md-card-content>
+        <md-card-actions>
+          <button class="full-width-button" md-button>PLAN DETAILS</button>
+        </md-card-actions>
+      </md-card>
+      <md-card *ngIf="plan === 'monthly'" class="shopping-cart">
+        <md-card-header>
+          <md-card-title>Shopping cart</md-card-title>
+        </md-card-header>
+        <md-card-content>
+          <h3>{{selectedCard.name | uppercase}} plan</h3>
+          <h5 class="card-survey">{{selectedCard.amount}} Surveys</h5>
+          <b>${{selectedCard.monthly}}</b>
+          <p>To be billed monthly</p>
+        </md-card-content>
+        <md-card-actions>
+          <button class="full-width-button" md-button>PLAN DETAILS</button>
+        </md-card-actions>
+      </md-card>
+      <div *ngIf="form === 'company'">
+        <md-card class="company-card">
+          <form name="companyForm">
+            <md-card-header>
+              <md-card-title>Verify company info</md-card-title>
+            </md-card-header>
+            <div fxLayoutAlign="center center">
+              <md-card-content class="company-card-content">
+                <md-input-container class="full-width">
+                  <input type="text" id="name" required name="name" mdInput placeholder="Name">
+                </md-input-container>
+                <div fxLayout="row">
+                  <form>
+                    <md-select required placeholder="Country" id="country" [(ngModel)]="selectedCountry" name="country">
+                      <md-option *ngFor="let country of countries" [value]="country.value">
+                        {{country.viewValue}}
+                      </md-option>
+                    </md-select>
+                  </form>
+                  <md-input-container>
+                    <input type="number" mdInput placeholder="ZIP">
+                  </md-input-container>
+                </div>
+                <md-input-container class="full-width">
+                  <input type="text" id="city"  required mdInput placeholder="City">
+                </md-input-container>
+              </md-card-content>
+            </div>
+            <div fxLayoutAlign="center center">
+              <md-card-actions class="company-card-content">
+                <button md-button (click)="form = 'payment'" class="full-width" type="submit">Add Payment Method</button>
+              </md-card-actions>
+            </div>
+          </form>
+        </md-card>
+      </div>
+      <div *ngIf="form === 'payment'">
+        <md-card class="company-card">
+          <md-card-header>
+            <md-card-title>Add a payment method</md-card-title>
+          </md-card-header>
+          <div fxLayoutAlign="center center" fxLayout="column">
+            <md-card-content class="company-card-content">
+              <md-input-container class="full-width">
+                <input mdInput required placeholder="Name on the card">
+              </md-input-container>
+              <md-input-container class="full-width">
+                <input mdInput required placeholder="Card number">
+              </md-input-container>
+              <div fxLayout="row">
+                <md-select placeholder="Month" [(ngModel)]="selectedMonth" name="month">
+                  <md-option *ngFor="let month of months" [value]="month.value">
+                    {{month.viewValue}}
+                  </md-option>
+                </md-select>
+                <form>
+                  <md-select [(ngModel)]="selectedYear" name="year">
+                    <md-option *ngFor="let year of years" [value]="year.value">
+                      {{year.viewValue}}
+                    </md-option>
+                  </md-select>
+                </form>
+                <md-input-container>
+                  <input mdInput required placeholder="CVC">
+                </md-input-container>
+              </div>
+              <div fxLayout="row">
+                <form>
+                  <md-select placeholder="Country" [(ngModel)]="selectedCountry" name="country">
+                    <md-option *ngFor="let country of countries" [value]="country.value">
+                      {{country.viewValue}}
+                    </md-option>
+                  </md-select>
+                </form>
+                <md-input-container>
+                  <input mdInput placeholder="ZIP">
+                </md-input-container>
+              </div>
+            </md-card-content>
+          </div>
+          <div fxLayoutAlign="center center">
+            <md-card-actions class="company-card-content">
+              <button (click)="form = 'confirm'" class="full-width" md-button>Review order</button>
+            </md-card-actions>
+          </div>
+        </md-card>
+      </div>
+      <div *ngIf="form === 'confirm'">
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <md-card class="company-card" fxLayoutAlign="center center">
+            <md-card-content class="company-card-content" fxLayout="column" fxLayoutAlign="center center">
+              <h1>Total Billed $205</h1>
+              <button (click)="view = 'default'" (click)="form = 'company'"md-button class="full-width">Confirm Payment</button>
+              <p>Secure 128-bit encrypted payment</p>
+            </md-card-content>
+          </md-card>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
